@@ -1,10 +1,12 @@
 from flask import Blueprint, request, jsonify, current_app
 from bson.objectid import ObjectId
 from datetime import datetime, timedelta
+from flask_jwt_extended import jwt_required
 
 penitipan_bp = Blueprint('penitipan', __name__)
 
 @penitipan_bp.route('/', methods=['GET'])
+@jwt_required()
 def get_penitipan():
     db = current_app.db
     items = list(db.penitipan.find())
@@ -13,6 +15,7 @@ def get_penitipan():
     return jsonify(items)
 
 @penitipan_bp.route('/', methods=['POST'])
+@jwt_required()
 def create_penitipan():
     data = request.json
     db = current_app.db
@@ -34,6 +37,7 @@ def create_penitipan():
     return jsonify({'inserted_id': str(result.inserted_id)}), 201
 
 @penitipan_bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 def update_penitipan(id):
     data = request.json
     db = current_app.db
@@ -66,6 +70,7 @@ def update_penitipan(id):
     return jsonify({'message': 'Penitipan updated'})
 
 @penitipan_bp.route('/<id>', methods=['DELETE'])
+@jwt_required()
 def delete_penitipan(id):
     db = current_app.db
     db.penitipan.delete_one({'_id': ObjectId(id)})

@@ -10,10 +10,11 @@ class Config:
     HOST    = "custody.do58rxn.mongodb.net"
     DB_NAME = os.environ.get("MONGODB_DATABASE", "penitipan_hewan")
 
-    # percent‑encode the password
     PWD_ENC = quote_plus(PWD)
 
     MONGO_URI = (
         f"mongodb+srv://{USER}:{PWD_ENC}@{HOST}/{DB_NAME}"
         "?retryWrites=true&w=majority&appName=Custody"
     )
+
+    JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "PetA-dadakan")

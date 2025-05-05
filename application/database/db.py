@@ -8,7 +8,7 @@ def init_db(app):
     uri = app.config['MONGO_URI']
     client = MongoClient(uri, server_api=ServerApi("1"))
     db = client[app.config.get('DB_NAME', 'penitipan_hewan')]
-    app.db = db  # attach to app for blueprint access
+    app.db = db
 
     try:
         client.admin.command("ping")
